@@ -1,14 +1,24 @@
-document.getElementById("btn").addEventListener("click",()=>{
+document.getElementById("btn").addEventListener("click",getAllEmployees)
+
+
+function getAllEmployees(){
     const xhr = new XMLHttpRequest();
-    xhr.open("GET","example.txt",true);
-
-    xhr.send();
-
+    
 
     xhr.onload=()=>{
         if(xhr.status===200){
-              console.log(xhr.responseText)
+            const employees=JSON.parse(xhr.responseText);
+            employees.forEach(employee => {
+                document.body.innerHTML+=`
+                    Id: ${employee.id} Name: ${employee.name} 
+              `;
+            });
+              
         }
       
     }
-})
+    xhr.open("GET","employees.json",true);
+
+    xhr.send();
+
+}
